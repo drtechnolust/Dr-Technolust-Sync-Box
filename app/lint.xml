@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lint>
+    <!-- Artwork is in drawable-nodpi and mipmap density buckets. The sole
+         drawable XML is scalable and does not need density-specific copies. -->
+    <issue id="IconMissingDensityFolder">
+        <ignore path="src/main/res" />
+    </issue>
+</lint>

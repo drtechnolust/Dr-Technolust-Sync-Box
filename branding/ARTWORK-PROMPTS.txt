@@ -1,0 +1,22 @@
+Dr.Technolust Sync Box artwork
+Generated with the built-in image-generation tool on October 15, 2026.
+References: the owner's approved chrome skull / RGB-ring logo and prior TV banner.
+Final masters: logo-master.png (transparent), tv-banner-master.png (opaque).
+Android outputs are mechanically downsampled by tools/build_brand_assets.ps1.
+
+Icon prompt:
+Production Android TV launcher icon. Preserve the recognizable front-facing
+metallic cybernetic skull, cyan glowing eyes, etched cyan/orange circuitry and
+single RGB rainbow ring. Refine crisp edges, balanced geometry and controlled
+glow. Center with adaptive-icon safe padding. Genuinely transparent alpha.
+No text, switchblades, weapons, movie props, extra objects or watermark.
+
+Banner prompt:
+Update the existing dark navy/cyan/magenta Android TV banner, preserving the
+approved skull and RGB ring on the left. Exact large right-hand text on two lines:
+"Dr.Technolust"
+"Sync Box"
+First line white, second cyan. Exact subtitle "Local Android TV control".
+Remove old DrTech / LED Sync wording. Generous safe margins and restrained
+cyan/magenta/mint accents. Flat digital launcher artwork, not a device mockup.
+No blades, weapons, extra logos, clutter or watermark.

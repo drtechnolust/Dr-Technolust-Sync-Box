@@ -1,0 +1,19 @@
+Dr.Technolust Sync Box
+Developed by Dr. Technolust. Application source is licensed under the MIT License.
+Logo artwork is copyright Dr. Technolust, all rights reserved, and is not MIT-licensed.
+
+This APK includes the Kotlin standard library (JetBrains and Kotlin contributors)
+and AndroidX/Jetpack libraries (The Android Open Source Project and contributors),
+including Compose UI/Material3, Activity, Core, Lifecycle, WorkManager and their
+transitive AndroidX dependencies. These are distributed under Apache License 2.0.
+The license text is included in APACHE-2.0.txt.
+
+Kotlin: https://github.com/JetBrains/kotlin
+AndroidX: https://android.googlesource.com/platform/frameworks/support/
+
+The separate source download also contains the Gradle wrapper. Its license and
+distribution notice are included under gradle/wrapper/.
+
+The app contains no manufacturer SDK or manufacturer cloud credentials.
+FancyLEDs and Tuya are trademarks of their respective owners, referenced only
+to describe compatibility. This is an independent, unofficial project.
