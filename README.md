@@ -12,12 +12,12 @@ Developed by **Dr. Technolust**.
 
 ![Dr.Technolust Sync Box](branding/tv-banner-master.png)
 
-**First public release: 1.0.3.** Unofficial local controller, physically tested
+**Current release: 1.0.4.** Unofficial local controller, physically tested
 with the F62 and NVIDIA Shield. You must supply your own box's local key.
 
 [Download signed APK](https://github.com/drtechnolust/Dr-Technolust-Sync-Box/releases/latest)
-· [Watch the app walkthrough](https://github.com/drtechnolust/Dr-Technolust-Sync-Box/releases/download/v1.0.3/Dr-Technolust-Sync-Box-Walkthrough.mp4)
-· [All screenshots](https://github.com/drtechnolust/Dr-Technolust-Sync-Box/releases/download/v1.0.3/Dr-Technolust-Sync-Box-Screenshots.zip)
+· [Watch the app walkthrough](https://github.com/drtechnolust/Dr-Technolust-Sync-Box/releases/download/v1.0.4/Dr-Technolust-Sync-Box-Walkthrough.mp4)
+· [All screenshots](https://github.com/drtechnolust/Dr-Technolust-Sync-Box/releases/download/v1.0.4/Dr-Technolust-Sync-Box-Screenshots.zip)
 
 ![Sync controls](media/01-sync.png)
 
@@ -78,10 +78,10 @@ setup/navigation, alarm-permission, and connection-recovery checks.
 
 ## Install
 
-1. Download **Dr-Technolust-Sync-Box-1.0.3.apk** from the release and check its SHA-256
+1. Download **Dr-Technolust-Sync-Box-1.0.4.apk** from the release and check its SHA-256
    against **SHA256SUMS.txt**. Do not install a file from an untrusted mirror.
 2. Sideload with your TV's file manager, or use `adb connect <tv-ip>:5555` then
-   `adb -s <tv-ip>:5555 install -r Dr-Technolust-Sync-Box-1.0.3.apk`.
+   `adb -s <tv-ip>:5555 install -r Dr-Technolust-Sync-Box-1.0.4.apk`.
 3. Open **Dr.Technolust Sync Box** from the TV launcher.
 
 Updating a release signed with the same certificate preserves setup and presets.
@@ -127,7 +127,7 @@ Gradle 8.14.3 and its distribution checksum are pinned by the included wrapper.
    the app and complete **First-run setup** below. No device key is built into it.
 
 The first build downloads Gradle/dependencies from their official repositories.
-The clean exported source was independently built and its 19 unit/protocol tests
+The clean exported source was independently built and its 24 unit/protocol tests
 passed without local properties, signing files or device credentials.
 Network access is needed to build, not for vendor-cloud control at runtime.
 Your debug/self-signed build has a different signing identity from the official
@@ -180,6 +180,10 @@ See [docs/VERIFICATION.md](docs/VERIFICATION.md) for tests and the remaining
 hardware-observation limits. Version 1.0.3 adds permanent release signing,
 explicit setup-field remote navigation, non-blocking disconnect handling,
 offline control guards, atomic encrypted storage and backup/transfer exclusions.
+Version 1.0.4 hardens the app: discovery trusts the real sender address instead of
+the one an announcement claims, the box address must be a home-network address,
+untrusted JSON is depth-limited, and the build adds Dependabot updates and Gradle
+wrapper validation.
 
 Release builds fail without a signing configuration; there is no debug-key
 fallback. On Windows, `tools/init_signing.ps1` creates your own private signing

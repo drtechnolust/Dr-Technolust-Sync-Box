@@ -1,7 +1,7 @@
 # Read-only APK gate. Prints no device credentials or signing passwords.
 param(
     [string]$Apk = (Join-Path (Split-Path -Parent $PSScriptRoot) 'app\build\outputs\apk\release\app-release.apk'),
-    [string]$Version = '1.0.3',
+    [string]$Version = '1.0.4',
     [string]$SdkRoot = $(if ($env:ANDROID_HOME) { $env:ANDROID_HOME } else { Join-Path $env:LOCALAPPDATA 'Android\Sdk' })
 )
 $ErrorActionPreference = 'Stop'

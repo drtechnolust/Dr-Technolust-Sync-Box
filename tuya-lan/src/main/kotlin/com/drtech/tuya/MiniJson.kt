@@ -65,8 +65,17 @@ object MiniJson {
         out.append('"')
     }
 
+    /** Device and discovery data are shallow; refuse deep nesting so crafted input cannot overflow the stack. */
+    private const val MAX_DEPTH = 32
+
     private class Reader(private val s: String) {
         private var i = 0
+        private var depth = 0
+
+        private inline fun <T> nested(block: () -> T): T {
+            if (++depth > MAX_DEPTH) throw IllegalArgumentException("JSON nested too deeply")
+            try { return block() } finally { depth-- }
+        }
 
         fun atEnd() = i >= s.length
 
@@ -78,8 +87,8 @@ object MiniJson {
             skipWhitespace()
             if (atEnd()) throw IllegalArgumentException("Unexpected end of JSON")
             return when (val c = s[i]) {
-                '{' -> readObject()
-                '[' -> readArray()
+                '{' -> nested { readObject() }
+                '[' -> nested { readArray() }
                 '"' -> readString()
                 't' -> literal("true", true)
                 'f' -> literal("false", false)

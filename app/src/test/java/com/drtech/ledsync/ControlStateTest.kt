@@ -80,6 +80,15 @@ class ControlStateTest {
         assertEquals(SoundMode.ROCK, s.soundMode)
     }
 
+    @Test fun onlyLocalNetworkAddressesAreAcceptedForTheBox() {
+        for (ip in listOf("192.168.1.50", "10.0.0.7", "172.16.0.1", "172.31.255.254", "169.254.3.4", "100.64.0.9", "127.0.0.1")) {
+            assertTrue(ip, isLocalNetworkAddress(ip))
+        }
+        for (ip in listOf("8.8.8.8", "203.0.113.5", "172.15.0.1", "172.32.0.1", "100.63.0.1", "100.128.0.1", "192.169.1.1", "1.2.3", "a.b.c.d", "")) {
+            assertFalse(ip, isLocalNetworkAddress(ip))
+        }
+    }
+
     @Test fun presetsRoundTripAndRejectCorruption() {
         val p = Preset(46, 0, false, true, 100, SceneMode.COLOR.code, CustomColor(240, 80, 30))
         assertEquals(p, Preset.decode(p.encode()))

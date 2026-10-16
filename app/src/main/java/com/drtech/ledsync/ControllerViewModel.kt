@@ -24,6 +24,24 @@ sealed interface ScanState {
     data class Done(val devices: List<DiscoveredDevice>) : ScanState
 }
 
+/**
+ * True for addresses that can only be on a local network: loopback, private (RFC 1918),
+ * link-local and carrier-grade NAT (used by Tailscale). Keeps the key and commands from
+ * being sent to an arbitrary public host through a typo or a spoofed announcement.
+ */
+internal fun isLocalNetworkAddress(ip: String): Boolean {
+    val p = ip.split('.').map { it.toIntOrNull() ?: return false }
+    if (p.size != 4) return false
+    return when {
+        p[0] == 10 || p[0] == 127 -> true
+        p[0] == 192 && p[1] == 168 -> true
+        p[0] == 172 && p[1] in 16..31 -> true
+        p[0] == 169 && p[1] == 254 -> true
+        p[0] == 100 && p[1] in 64..127 -> true
+        else -> false
+    }
+}
+
 class ControllerViewModel : ViewModel() {
     private val providerFlow = MutableStateFlow(LedSyncApplication.createProvider())
     private val provider: SyncBoxProvider get() = providerFlow.value
@@ -133,6 +151,7 @@ class ControllerViewModel : ViewModel() {
         val id = deviceId.trim()
         val localKey = key.trim()
         if (!IPV4.matches(ip)) return "Enter the box's IP address, for example 192.168.1.50."
+        if (!isLocalNetworkAddress(ip)) return "That isn't a home-network address. Use the box's local IP, for example 192.168.1.50."
         if (id.length !in 15..32 || !id.all { it.isLetterOrDigit() }) return "Enter the device ID (letters and digits)."
         if (localKey.length != 16) return "The local key is exactly 16 characters."
         if (localKey.any { it.code !in 33..126 }) return "The local key must contain only printable ASCII characters."

@@ -2,7 +2,7 @@
 # Only an allow-list of files is copied; the result is then scanned for secrets,
 # device-specific values and vendor material, and the script fails if any are found.
 #   & .\tools\make_release.ps1
-param([string]$Version = '1.0.3')
+param([string]$Version = '1.0.4')
 $ErrorActionPreference = 'Stop'
 if ($Version -notmatch '^\d+\.\d+\.\d+$') { throw 'Use a numeric semantic version.' }
 $root = Split-Path -Parent $PSScriptRoot

@@ -10,8 +10,20 @@ class TuyaDiscoveryTest {
         val frame = TuyaDiscovery.buildAnnounce(
             """{"ip":"10.0.0.7","gwId":"abc123deviceid","active":2,"encrypt":true,"productKey":"pk123","version":"3.4"}""",
         )
-        val device = TuyaDiscovery.parsePacket(frame, "10.0.0.99")
+        val device = TuyaDiscovery.parsePacket(frame, "10.0.0.7")
         assertEquals(DiscoveredDevice("10.0.0.7", "abc123deviceid", "pk123", "3.4"), device)
+    }
+
+    @Test
+    fun trustsTheRealSenderOverAClaimedAddress() {
+        val frame = TuyaDiscovery.buildAnnounce("""{"ip":"203.0.113.5","gwId":"abc123deviceid","version":"3.4"}""")
+        assertEquals("10.0.0.99", TuyaDiscovery.parsePacket(frame, "10.0.0.99")?.ip)
+    }
+
+    @Test
+    fun rejectsAClaimedAddressThatIsNotAnIpWhenThereIsNoSender() {
+        val frame = TuyaDiscovery.buildAnnounce("""{"ip":"evil.example.com","gwId":"abc123deviceid"}""")
+        assertNull(TuyaDiscovery.parsePacket(frame, null))
     }
 
     @Test

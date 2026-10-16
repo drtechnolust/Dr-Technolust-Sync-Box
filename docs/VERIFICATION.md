@@ -1,4 +1,9 @@
-# Verification — Dr.Technolust Sync Box 1.0.3
+# Verification — Dr.Technolust Sync Box 1.0.4
+
+Version 1.0.4 is a security-hardening release on top of the 1.0.3 baseline. The
+hardware and emulator checks below were performed on 1.0.3; the 1.0.4 changes
+(see the README) are covered by 24 unit/protocol tests and a post-change smoke
+test on the NVIDIA Shield with the F62.
 
 Release checks: October 15, 2026. Physical hardware: NVIDIA Shield Android 11
 (API 30) and the owner's FancyLEDs F62, product h2nqrmaskyhckcmf, LAN 3.4.

@@ -25,6 +25,7 @@ object TuyaDiscovery {
         MessageDigest.getInstance("MD5").digest("yGAdlopoPVldABfn".toByteArray(Charsets.US_ASCII))
 
     private const val PREFIX = 0x000055AA
+    private val IPV4 = Regex("""^(25[0-5]|2[0-4]\d|1?\d?\d)(\.(25[0-5]|2[0-4]\d|1?\d?\d)){3}$""")
 
     /** Listens for [timeoutMs] and returns every distinct device heard. */
     fun scan(timeoutMs: Long = 7_000): List<DiscoveredDevice> {
@@ -61,8 +62,8 @@ object TuyaDiscovery {
     }
 
     /**
-     * Parses one broadcast frame. [sourceIp] is used when the payload omits its
-     * own address. Returns null for anything that is not a recognizable announce.
+     * Parses one broadcast frame. [sourceIp] (the packet's real sender) wins over any
+     * address the payload claims. Returns null for anything that is not a recognizable announce.
      */
     fun parsePacket(data: ByteArray, sourceIp: String?): DiscoveredDevice? {
         if (data.size < 28 || ByteBuffer.wrap(data).getInt(0) != PREFIX) return null
@@ -71,7 +72,11 @@ object TuyaDiscovery {
         val text = decryptOrPlain(body) ?: return null
         val json = runCatching { MiniJson.parse(text) }.getOrNull() as? Map<*, *> ?: return null
         val id = (json["gwId"] ?: json["devId"]) as? String ?: return null
-        val ip = (json["ip"] as? String) ?: sourceIp ?: return null
+        // The announce is unauthenticated, so trust the address it really came from over the
+        // one it claims; fall back to the claim (if it is a plain IPv4) only without a sender.
+        val ip = sourceIp?.takeIf { IPV4.matches(it) }
+            ?: (json["ip"] as? String)?.takeIf { IPV4.matches(it) }
+            ?: return null
         return DiscoveredDevice(
             ip = ip,
             deviceId = id,
